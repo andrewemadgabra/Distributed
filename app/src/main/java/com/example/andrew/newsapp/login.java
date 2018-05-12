@@ -17,54 +17,50 @@ import android.widget.Toast;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Password;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.List;
 
-public class regitration extends AppCompatActivity implements Validator.ValidationListener, View.OnClickListener  {
+public class login extends AppCompatActivity  implements Validator.ValidationListener, View.OnClickListener {
+    @NotEmpty
+    @Email
+    EditText email;
+
+    @NotEmpty
+    EditText password;
 
     protected Validator validator;
     protected boolean validated;
 
-    @NotEmpty(message = "Please enter Name")
-    EditText name_user_reg;
-
-    @NotEmpty
-    @Email
-    EditText email_user_reg;
-
-    @NotEmpty
-    @Password(min=1,message = "Password should contain at least one character", scheme = Password.Scheme.ALPHA_NUMERIC)
-    EditText password_user_reg;
-
-    @NotEmpty
-    @Length(min = 11 , max = 11, message = "Miminum and maximum length is 11")
-    EditText number_phone;
-
-    Button Sign_up;
+    Button btn_login_input;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_regitration);
+        setContentView(R.layout.activity_login);
 
         validator = new Validator(this);
         validator.setValidationListener(this);
 
-        name_user_reg = (EditText) findViewById(R.id.et_name);
-        email_user_reg = (EditText) findViewById(R.id.et_email);
-        password_user_reg = (EditText) findViewById(R.id.et_password);
-        Sign_up = (Button) findViewById(R.id.btn_signup_reg);
+        email = (EditText) findViewById(R.id.et_email);
+        password = (EditText) findViewById(R.id.et_password);
+        btn_login_input = findViewById(R.id.btn_login);
 
-        Sign_up.setOnClickListener(new View.OnClickListener() {
 
+        btn_login_input.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 validator.validate();
+                if (validate());
+
             }
         });
+
     }
+
     protected boolean validate() {
         if (validator != null)
             validator.validate();
@@ -74,10 +70,8 @@ public class regitration extends AppCompatActivity implements Validator.Validati
     @Override
     public void onValidationSucceeded() {
         validated = true;
-        String name_input_user_reg = name_user_reg.getText().toString().trim();
-        final String email_input_user_reg = email_user_reg.getText().toString().trim();
-        String password_input_user_reg = password_user_reg.getText().toString();
-        validated = true;
+        final String email_user = email.getText().toString().trim();
+        String password_user = password.getText().toString().trim();
     }
 
     @Override
@@ -87,10 +81,12 @@ public class regitration extends AppCompatActivity implements Validator.Validati
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(this);
+
+
             // Display error messages
             if (view instanceof Spinner) {
                 Spinner sp = (Spinner) view;
-                view = ((LinearLayout) sp.getSelectedView()).getChildAt(0);        // we are actually interested in the text view spinner has
+                view = ((LinearLayout) sp.getSelectedView()).getChildAt(0);// we are actually interested in the text view spinner has
             }
 
             if (view instanceof TextView) {
