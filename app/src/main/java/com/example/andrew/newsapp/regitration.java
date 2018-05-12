@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
@@ -37,6 +38,10 @@ public class regitration extends AppCompatActivity implements Validator.Validati
     @NotEmpty
     @Password(min=1,message = "Password should contain at least one character", scheme = Password.Scheme.ALPHA_NUMERIC)
     EditText password_user_reg;
+
+    @NotEmpty
+    @Length(min = 11 , max = 11, message = "Miminum and maximum length is 11")
+    EditText number_phone;
 
     Button Sign_up;
 
