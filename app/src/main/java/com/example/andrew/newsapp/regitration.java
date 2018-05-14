@@ -29,7 +29,7 @@ public class regitration extends AppCompatActivity implements Validator.Validati
 
     private static final String URL = "jdbc:mysql://192.168.1.5/news";
     private static final String USERNAME = "username";
-    private static final String PASSWORD = "passwordET";
+    private static final String PASSWORD = "password";
 
     protected Validator validator;
     protected boolean validated;
@@ -141,7 +141,7 @@ public class regitration extends AppCompatActivity implements Validator.Validati
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-                String query = "INSERT INTO `user`(`name`, `emailET`, `passwordET`, `type`, `mobile`) VALUES (?, ?, ?, ?, ?)";
+                String query = "INSERT INTO `user`(`name`, `email`, `password`, `type`, `mobile`) VALUES (?, ?, ?, ?, ?)";
 
                 PreparedStatement preparedStmt = connection.prepareStatement(query);
                 preparedStmt.setString(1, name);
