@@ -43,20 +43,20 @@ public class PostNewsActivity extends AppCompatActivity {
         try{
             FileInputStream fileIn = new FileInputStream (new File(getFilesDir(),FILENAME));
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            //e = (News) in.readObject();
+            e = (News) in.readObject();
             in.close();
             fileIn.close();
         }catch(IOException i){
             i.printStackTrace();
             return;
-        }/*catch(ClassNotFoundException c){
+        }catch(ClassNotFoundException c){
             System.out.println("Employee class not found");
             c.printStackTrace();
             return;
-        }*/
+        }
 
-//        System.out.println("Deserialized News...");
-//        System.out.println("Title: "+ e.getTitle());
+        System.out.println("Deserialized News...");
+        System.out.println("Title: "+ e.title);
 //        System.out.println("Category: "+ e.getCategory());
 //        System.out.println("Body: "+ e.getBody());
 //        System.out.println("date: "+ e.getDate());

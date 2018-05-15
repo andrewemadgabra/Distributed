@@ -6,12 +6,12 @@ package com.example.andrew.newsapp;
 
 public class News {
 
-    private String title;
-    private String category;
-    private String date;
-    private String body;
-    private String image;
-    private String author;
+    public String title;
+    public String category;
+    public String date;
+    public String body;
+    public String image;
+    public String author;
 
     public News(String title, String category, String date, String body, String image, String author) {
         this.title = title;
