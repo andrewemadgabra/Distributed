@@ -8,15 +8,15 @@ public class News {
 
     private String title;
     private String category;
-    private String dare;
+    private String date;
     private String body;
     private String image;
     private String author;
 
-    public News(String title, String category, String dare, String body, String image, String author) {
+    public News(String title, String category, String date, String body, String image, String author) {
         this.title = title;
         this.category = category;
-        this.dare = dare;
+        this.date = date;
         this.body = body;
         this.image = image;
         this.author = author;
@@ -30,8 +30,8 @@ public class News {
         return category;
     }
 
-    public String getDare() {
-        return dare;
+    public String getDate() {
+        return date;
     }
 
     public String getBody() {
