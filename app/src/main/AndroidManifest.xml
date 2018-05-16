@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".PostNewsActivity">
+        <activity android:name=".serversidechat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +32,9 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
-        <!--<activity android:name=".PostNewsActivity"></activity>-->
+        <!-- <activity android:name=".PostNewsActivity"></activity> -->
+        <!--<activity android:name=".serversidechat" />-->
+        <activity android:name=".clientsidechat"></activity>
     </application>
 
 </manifest>
