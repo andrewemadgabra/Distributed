@@ -1,5 +1,6 @@
 package com.example.andrew.newsapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,11 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -23,14 +29,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class login extends AppCompatActivity implements Validator.ValidationListener, View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements Validator.ValidationListener, View.OnClickListener {
 
     private static final String URL = "jdbc:mysql://192.168.1.5/news";
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
 
-    private static String email, password;
 
+    private static String email, password;
+    private String loginData[] = new String[2];
     boolean user;
 
     @NotEmpty
@@ -63,8 +70,12 @@ public class login extends AppCompatActivity implements Validator.ValidationList
             public void onClick(View v) {
                 validator.validate();
                 if (validate()) {
-                    password = passwordET.getText().toString().trim();
+
                     email = emailET.getText().toString().trim();
+                    password = passwordET.getText().toString().trim();
+
+                    loginData[0] = email;
+                    loginData[1] = password;
 
                     CheckUserExitsTask checkUserExitsTask = new CheckUserExitsTask();
                     checkUserExitsTask.execute();
@@ -117,24 +128,33 @@ public class login extends AppCompatActivity implements Validator.ValidationList
 
     public class CheckUserExitsTask extends AsyncTask<Void, Void, Void> {
 
+        private String message;
+        private boolean loginSuccess;
 
         @Override
         protected Void doInBackground(Void... voids) {
 
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                Socket socket = new Socket("10.0.2.2", 100);
 
-                Statement statement = connection.createStatement();
-                String sql = "SELECT * FROM `user` WHERE email = '" + email + "' AND password = '" + password + "'";
-                ResultSet resultSet = statement.executeQuery(sql);
+                ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
 
-                user = resultSet.next();
+                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 
-                connection.close();
-            } catch (ClassNotFoundException e) {
+                os.writeObject(loginData);
+                os.flush();
+
+                loginSuccess = (boolean) ois.readObject();
+//                os.close();
+//                ois.close();
+//
+//                socket.close();
+
+            } catch (UnknownHostException e) {
                 e.printStackTrace();
-            } catch (SQLException e) {
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
 
@@ -145,14 +165,13 @@ public class login extends AppCompatActivity implements Validator.ValidationList
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            if (user) {
-                Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "Not Valid User!", Toast.LENGTH_SHORT).show();
-            }
+            if (loginSuccess) {
+                Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
 
+            } else {
+                Toast.makeText(getApplicationContext(), "User Not Found!", Toast.LENGTH_LONG).show();
+            }
         }
     }
-
-
 }

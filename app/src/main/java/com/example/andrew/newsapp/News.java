@@ -9,17 +9,13 @@ public class News {
     private String title;
     private String category;
     private String dare;
-    private String body;
     private String image;
-    private String author;
 
-    public News(String title, String category, String dare, String body, String image, String author) {
+    public News(String title, String category, String dare, String image) {
         this.title = title;
         this.category = category;
         this.dare = dare;
-        this.body = body;
         this.image = image;
-        this.author = author;
     }
 
     public String getTitle() {
@@ -34,15 +30,7 @@ public class News {
         return dare;
     }
 
-    public String getBody() {
-        return body;
-    }
-
     public String getImage() {
         return image;
-    }
-
-    public String getAuthor() {
-        return author;
     }
 }

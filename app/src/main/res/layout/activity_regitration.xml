@@ -7,7 +7,7 @@
     android:layout_marginTop="50dp"
     android:orientation="vertical"
     android:theme="@style/Theme.Design.Light.NoActionBar"
-    tools:context=".regitration">
+    tools:context=".RegisterActivity">
 
     <ScrollView
         android:layout_width="match_parent"
