@@ -255,6 +255,7 @@ public class AddNewsActivity extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getApplicationContext(), PostNewsActivity.class));
         }
     }
 }
