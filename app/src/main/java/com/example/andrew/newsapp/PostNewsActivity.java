@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class PostNewsActivity extends AppCompatActivity {
 
-    public final String URL = "jdbc:mysql://192.168.1.4/news";
+    public final String URL = "jdbc:mysql://192.168.1.6/news";
     public final String USERNAME = "username";
     public final String PASSWORD = "password";
 
@@ -102,7 +102,7 @@ public class PostNewsActivity extends AppCompatActivity {
 
             newsAdapter = new LocalNewsAdapter(newsArrayList, getApplicationContext());
             newsRecyclerView.setAdapter(newsAdapter);
-            Toast.makeText(PostNewsActivity.this, String.valueOf(newsArrayList.size()), Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(PostNewsActivity.this, String.valueOf(newsArrayList.size()), Toast.LENGTH_SHORT).show();
             super.onPostExecute(result);
         }
 

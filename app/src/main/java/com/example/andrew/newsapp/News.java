@@ -1,10 +1,12 @@
 package com.example.andrew.newsapp;
 
+import java.io.Serializable;
+
 /**
- * Created by miche on 5/14/2018.
+ * Created by miche on 5/17/2018.
  */
 
-public class News {
+public class News implements Serializable {
 
     private String title;
     private String category;

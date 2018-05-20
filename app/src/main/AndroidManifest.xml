@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".RegisterActivity">
+        <activity android:name=".NewsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".RegisterActivity"
             android:label="@string/title_activity_regitration"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -33,7 +33,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".PostNewsActivity" />
         <activity android:name=".AddNewsActivity"></activity>
-        <activity android:name=".NewsActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>

@@ -29,7 +29,7 @@ import java.util.Date;
 public class NewsLoaderTask extends AsyncTaskLoader<ArrayList<News>> {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private static final String NEWS_API_URL = "http://content.guardianapis.com/search?api-key=test&show-fields=thumbnail";
+    private static final String NEWS_API_URL = "https://newsapi.org/v2/top-headlines?country=us&category=&apiKey=c4d3397c9bf645918c1fc9bf2a91192f";
     private ArrayList<News> newsList = new ArrayList<>();
 
     public NewsLoaderTask(@NonNull Context context, ArrayList<News> newsList) {
@@ -75,32 +75,31 @@ public class NewsLoaderTask extends AsyncTaskLoader<ArrayList<News>> {
             newsList.clear();
 
             JSONObject baseJsonResponse = new JSONObject(jsonResponse);
-            JSONObject responseJsonObject = baseJsonResponse.getJSONObject("response");
-            JSONArray resultsArray = responseJsonObject.getJSONArray("results");
+            JSONArray resultsArray = baseJsonResponse.getJSONArray("articles");
 
             for (int i = 0; i < resultsArray.length(); i++) {
 
                 JSONObject newsJsonObject = resultsArray.getJSONObject(i);
+                JSONObject source = newsJsonObject.optJSONObject("source");
 
-                JSONObject imageAvailable = newsJsonObject.getJSONObject("fields");
 
                 String title;
-                if (newsJsonObject.has("webTitle")) {
-                    title = newsJsonObject.getString("webTitle");
+                if (newsJsonObject.has("title")) {
+                    title = newsJsonObject.optString("title");
                 } else {
                     title = "Title N/A";
                 }
 
                 String sectionName;
-                if (newsJsonObject.has("sectionName")) {
-                    sectionName = newsJsonObject.getString("sectionName");
+                if (source.has("name")) {
+                    sectionName = source.optString("name");
                 } else {
                     sectionName = "Section N/A";
                 }
 
                 String publishDate;
-                if (newsJsonObject.has("webPublicationDate")) {
-                    publishDate = newsJsonObject.getString("webPublicationDate");
+                if (newsJsonObject.has("publishedAt")) {
+                    publishDate = newsJsonObject.optString("publishedAt");
 
                     SimpleDateFormat newsDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     try {
@@ -115,24 +114,9 @@ public class NewsLoaderTask extends AsyncTaskLoader<ArrayList<News>> {
                     publishDate = "Published Date N/A";
                 }
 
-
-                String type;
-                if (newsJsonObject.has("type")) {
-                    type = newsJsonObject.getString("type");
-                } else {
-                    type = "Type N/A";
-                }
-
-                String webUrl;
-                if (newsJsonObject.has("webUrl")) {
-                    webUrl = newsJsonObject.getString("webUrl");
-                } else {
-                    webUrl = "Web URL N/A";
-                }
-
                 String image;
-                if (imageAvailable.has("thumbnail")) {
-                    image = imageAvailable.getString("thumbnail");
+                if (newsJsonObject.has("urlToImage")) {
+                    image = newsJsonObject.optString("urlToImage");
                 } else {
                     image = "Image N/A";
                 }
